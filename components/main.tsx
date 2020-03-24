@@ -4,6 +4,7 @@ import { TextInput } from "./textInput";
 import { Button } from "./button";
 import { fillCollection, retrieveCollections } from "../services/fill-fauna";
 import { csvParse } from "d3-dsv";
+import cogoToast from "cogo-toast";
 
 function parseFile(file: File, setFile: (f: string) => void) {
   const reader = new FileReader();
@@ -80,7 +81,19 @@ export const Main: React.FunctionComponent<{}> = props => {
               token,
               collectionName,
               getFileData(file.type as any, parsedFile)
-            );
+            )
+              .then(r => {
+                cogoToast.success(
+                  `You have successfully added ${
+                    (r as Array<{}>).length
+                  } documents to your collection`
+                );
+              })
+              .catch(e => {
+                cogoToast.error(
+                  `Error occured while uploading. ${e.name}: ${e.message}`
+                );
+              });
           }}
         >
           Fill your collection

@@ -6,19 +6,15 @@ export function fillCollection(
   data: {}[]
 ) {
   const client = new Client({ secret: token });
-  (window as any).c = client;
-  (window as any).q = q;
-  client
-    .query(
-      q.Map(
-        data,
-        q.Lambda(
-          "data",
-          q.Create(q.Collection(collectionName), { data: q.Var("data") })
-        )
+  return client.query(
+    q.Map(
+      data,
+      q.Lambda(
+        "data",
+        q.Create(q.Collection(collectionName), { data: q.Var("data") })
       )
     )
-    .then(console.log.bind(console));
+  );
 }
 export function retrieveCollections(token: string) {
   const client = new Client({ secret: token });
