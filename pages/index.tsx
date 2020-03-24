@@ -4,11 +4,11 @@ import { Main } from "../components/main";
 const Home = () => (
   <div className="container">
     <Head>
-      <title>Fill you faunaDB collection from json or csv file</title>
+      <title>Fill you FaunaDB collection from a json file</title>
     </Head>
 
     <main>
-      <h1>Drop a file below</h1>
+      <h1>Fill you FaunaDB collection from a json file</h1>
       <Main />
     </main>
     <style jsx>{`
