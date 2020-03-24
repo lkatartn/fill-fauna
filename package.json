@@ -1,0 +1,24 @@
+{
+  "name": "fill-fauna",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "d3-dsv": "^1.2.0",
+    "faunadb": "^2.13.0",
+    "next": "^9.3.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-dropzone": "^10.2.1"
+  },
+  "devDependencies": {
+    "@types/d3-dsv": "^1.0.36",
+    "@types/node": "^13.9.3",
+    "@types/react": "^16.9.25",
+    "typescript": "^3.8.3"
+  }
+}
