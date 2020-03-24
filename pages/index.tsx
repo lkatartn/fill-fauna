@@ -8,7 +8,9 @@ const Home = () => (
     </Head>
 
     <main>
-      <h1>Fill you FaunaDB collection from a json file</h1>
+      <h1>
+        Fill you FaunaDB collection <br /> from a json file
+      </h1>
       <Main />
     </main>
     <style jsx>{`
