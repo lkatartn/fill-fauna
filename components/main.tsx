@@ -3,6 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { TextInput } from "./textInput";
 import { Button } from "./button";
 import { fillCollection, retrieveCollections } from "../services/fill-fauna";
+import InfoTooltip from "./info-tooltip";
 import { csvParse } from "d3-dsv";
 import cogoToast from "cogo-toast";
 
@@ -15,16 +16,18 @@ function parseFile(file: File, setFile: (f: string) => void) {
 }
 function getFileData(
   fileType: "application/json" | "text/csv",
-  rawData: string
+  rawData: string,
+  fileName: string
 ): {}[] {
-  switch (fileType) {
-    case "application/json":
-      return JSON.parse(rawData);
-    case "text/csv":
-      return csvParse(rawData);
-    default:
-      return null;
+  const extension = fileName.split(".").pop();
+  if (fileType == "application/json" || extension == "json") {
+    return JSON.parse(rawData);
   }
+  if (extension == "csv") {
+    return csvParse(rawData);
+  }
+  cogoToast.error(`Extension should be either .csv or .json`);
+  return null;
 }
 export const Main: React.FunctionComponent<{}> = props => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
@@ -53,12 +56,20 @@ export const Main: React.FunctionComponent<{}> = props => {
         </section>
       )}
       <div {...getRootProps()} className="dropzone">
-        <input {...getInputProps({ accept: "application/json" })} />
+        <input {...getInputProps({ accept: "*" })} />
         <p>Drag 'n' drop your file here, or click to select one</p>
       </div>
       <p>
         <label>
-          Enter access token for your collection
+          Enter access token for your collection{" "}
+          <InfoTooltip
+            tooltipContent={
+              <>
+                Access token is used for making requests to your FaunaDB. It
+                lives only on this page and won't be pased to third-party.
+              </>
+            }
+          />
           <TextInput
             onChange={e => setToken((e.target as HTMLInputElement).value)}
           />
@@ -80,7 +91,7 @@ export const Main: React.FunctionComponent<{}> = props => {
             fillCollection(
               token,
               collectionName,
-              getFileData(file.type as any, parsedFile)
+              getFileData(file.type as any, parsedFile, file.name)
             )
               .then(r => {
                 cogoToast.success(
