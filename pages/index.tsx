@@ -4,12 +4,12 @@ import { Main } from "../components/main";
 const Home = () => (
   <div className="container">
     <Head>
-      <title>Fill you FaunaDB collection from a json file</title>
+      <title>Fill you FaunaDB collection from a json or csv file</title>
     </Head>
 
     <main>
       <h1>
-        Fill you FaunaDB collection <br /> from a json file
+        Fill you FaunaDB collection <br /> from a json or csv file
       </h1>
       <Main />
     </main>
